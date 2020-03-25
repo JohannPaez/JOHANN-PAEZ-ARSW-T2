@@ -39,7 +39,7 @@ public class CoronavirusServices {
 	public String getAllCases() {
 		ConcurrentHashMap<String, ContenidoJson> casesMap = new ConcurrentHashMap<>();
 		String cases = null;
-		/*
+		
 		if (serviceCache.isThereAllCache()) {
 			casesMap = serviceCache.getAllCache();
 			System.out.println("Consumio CACHE!");
@@ -48,8 +48,8 @@ public class CoronavirusServices {
 			casesMap = saveAllCache(cases);			
 		}
 		JSONObject stats = new JSONObject(casesMap);
-		cases = stats.toString();*/
-		cases = serviceHttp.getAllCases();
+		cases = stats.toString();
+		//cases = serviceHttp.getAllCases();
 		
 		return cases;
 	}
@@ -98,28 +98,42 @@ public class CoronavirusServices {
 			infected += (int) ciclo.get("confirmed");
 			cured += (int) ciclo.get("recovered");	
 			System.out.println("\n Bien ---------------------------------------------------------------- \n");
+			
 			if (serviceCache.isThereCache(ciclo.get("country").toString())) {
-				System.out.println("\n Entro consumir cache cache ---------------------------------------------------------------- \n");		
 				String jsonCountry = serviceCache.getCache(ciclo.get("country").toString());
-				String remplazado = jsonCountry.replace("\"", "   \'\'\" ");
-				remplazado= jsonCountry.replace("[", "\"");
-				remplazado= remplazado.replace("]", "\"");
-				JSONObject jsonObjectCountry = new JSONObject(remplazado);
-				System.out.println("\n BIEN?????????????????---------------------------------------------- \n" + jsonObjectCountry);
-				jsonObjectCountry.put("Num Deaths", String.valueOf((int) jsonObjectCountry.get("Num Deaths") + deaths));
-				jsonObjectCountry.put("Num Infected", String.valueOf((int) jsonObjectCountry.get("Num Infected") + infected));
-				jsonObjectCountry.put("Num Cured",  String.valueOf((int) jsonObjectCountry.get("Num Cured") + cured));
+				System.out.println("\n CADENA NORMAL ---------------------------------------------------------------- \n" + ciclo.get("country").toString() + jsonCountry);
+				
+				System.out.println("\n Entro consumir cache cache ---------------------------------------------------------------- \n");		
+				//String jsonCountry = serviceCache.getCache(ciclo.get("country").toString());
+				System.out.println("\n CADENA NORMAL ---------------------------------------------------------------- \n" + jsonCountry);
+				//String reemplazado = jsonCountry.replace("\"", "\\\"");
+				String reemplazado= jsonCountry.replace("[", "");
+				reemplazado= reemplazado.replace("]", "");
+				String resp = "{\"Num Deaths\":\"0\",\"Num Cured\":\"0\",\"Num Infected\":\"1\"}";
+				String resp2 = new String(reemplazado);
+				String otro = "{\"city\":\"chicago\",\"name\":\"jon doe\",\"age\":\"22\"}";
+				JSONObject jaja = new JSONObject(otro);
+				System.out.println("\n REEMPLAZADO ---------------------------------------------- \n" + reemplazado + " \n" + otro);
+				JSONObject jsonObjectCountry = new JSONObject(reemplazado);
+				System.out.println("\n BIEN?????????????????---------------------------------------------- \n" + jsonObjectCountry + "\n" + reemplazado);
+				jsonObjectCountry.put("deaths", String.valueOf(Integer.parseInt((String) jsonObjectCountry.get("deaths")) + deaths));
+				System.out.println("\n PASO1---------------------------------------------- \n" + jsonObjectCountry + "\n" + reemplazado);
+				jsonObjectCountry.put("infected", String.valueOf(Integer.parseInt((String) jsonObjectCountry.get("infected") + infected)));
+				jsonObjectCountry.put("cured",  String.valueOf(Integer.parseInt((String) jsonObjectCountry.get("cured") + cured)));
 				
 				serviceCache.saveCache(ciclo.get("country").toString(), jsonObjectCountry.toString());
 				
-				System.out.println(ciclo.get("country").toString());
+				System.out.println("\n LLEGO FINALLL ---------------------------------------------- \n" + jsonObjectCountry + "\n" + 
+				reemplazado + "\n ANTIGUOS" + jsonObjectCountry.get("infected") + "\n NUEVOS" + infected + "\n");
 			} else {
-				res.put("Num Deaths", String.valueOf(deaths));
-				res.put("Num Infected", String.valueOf(infected));
-				res.put("Num Cured", String.valueOf(cured));
+				res.put("deaths", String.valueOf(deaths));
+				res.put("infected", String.valueOf(infected));
+				res.put("cured", String.valueOf(cured));
 				stats.put(res);
 				serviceCache.saveCache(ciclo.get("country").toString(), stats.toString());
 				System.out.println("\n Entro guardar cache cache ---------------------------------------------------------------- \n");
+				String jsonCountry = serviceCache.getCache(ciclo.get("country").toString());
+				System.out.println("\n CADENA NORMAL SEGUNDA PARTE CICLO  ---------------------------------------------------------------- \n" + ciclo.get("country").toString() + jsonCountry);
 			}			
 		}
 
