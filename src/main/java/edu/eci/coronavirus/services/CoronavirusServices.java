@@ -17,6 +17,7 @@ import edu.eci.coronavirus.thread.CoronaVirusThread;
 
 
 
+
 @Service
 public class CoronavirusServices {
 	
@@ -88,18 +89,17 @@ public class CoronavirusServices {
 		JSONObject jo = new JSONObject(json);
 		JSONObject data = jo.getJSONObject("data");
 		JSONArray covid19Stats = jo.getJSONObject("data").getJSONArray("covid19Stats");
-		int threads = 5;
+
+		//System.out.println("FASE 1");
+		int threads = 12;
 		ArrayList<CoronaVirusThread> threadList = new ArrayList<>();		
 		for (int j = 0; j < threads; j++) {
-			CoronaVirusThread hilo = new CoronaVirusThread();
+			CoronaVirusThread hilo = new CoronaVirusThread(this);
         	threadList.add(hilo);
 		}
-		int hiloQueQuiero = 0, i = 0;
-		/*JSONObject j = (JSONObject) covid19Stats.get(0);
-		Map<String, Object> k = j.toMap();
 		
-		System.out.println("QUE JE ESO \n " + covid19Stats.get(0).getClass() + " \n " + k +  "\n " + k.getClass());*/
-		
+		//System.out.println("FASE 2");
+		int hiloQueQuiero = 0, i = 0;		
 		while (i < covid19Stats.length()) {			
 			JSONObject j = (JSONObject) covid19Stats.get(i);
 			threadList.get(hiloQueQuiero).addStats(j);
@@ -107,16 +107,22 @@ public class CoronavirusServices {
 			i++;
 			if (hiloQueQuiero == threadList.size()) hiloQueQuiero = 0;
 		}
-		System.out.println("TERMINO!");
 		
-		for (CoronaVirusThread CVT: threadList) {
-			CVT.start();
+		//System.out.println("FASE 3");
+		
+		for (int l = 0; l < threadList.size(); l++) {
+			threadList.get(l).start();
 		}
 		
 		for (CoronaVirusThread CVT: threadList) {
 			CVT.join();
 		}
 		
+		System.out.println("TERMINO!");
 		return serviceCache.getAllCache();
+	}
+	
+	public CoronavirusCache getServicesCache() {
+		return serviceCache;
 	}
 }

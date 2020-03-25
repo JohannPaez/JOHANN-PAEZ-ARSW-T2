@@ -25,7 +25,6 @@ public class CoronavirusController {
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<?> getAllCases(){
-		System.out.println("ENTRO CONTROLLER");
 		try {
 			return new ResponseEntity<>(services.getAllCases(),HttpStatus.ACCEPTED);
 		} catch (InterruptedException e) {

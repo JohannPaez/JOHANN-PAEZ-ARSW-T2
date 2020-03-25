@@ -18,7 +18,8 @@ public class CoronavirusCache {
 	private long time;
 	
 	
-	public boolean isThereCache(String name) {
+	public synchronized boolean isThereCache(String name) {
+		//System.out.println("\n -----------------------------------ENTRO A MIRAR SI HAY CACHE----------------------------------------------- \n");
 		boolean isThereCache = false;
 		if (cacheByName.get(name) != null && System.currentTimeMillis() - cacheByName.get(name).getTiempo() <= 1000 * 60 * 5) {
 			isThereCache = true;
