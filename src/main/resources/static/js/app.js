@@ -34,6 +34,52 @@ var app = (function(){
 
         map.fitBounds(bounds);
     }
+
+    var tableR = function(error, json) {
+        if (error != null) {
+            alert("ENTRO ALERT");
+            return;
+        }
+        alert("ENTRO");
+        var StringTableRight = tableRight(json);
+        $("#idTableRight").html(StringTableRight);
+    }
+
+    var tableRight = function(json) {
+
+        
+        var deaths = json.deaths;
+        var infected = json.infected;
+        var cured = json.cured;
+        alert(deaths + " " + infected + " " + cured);        
+        //alert(deaths + " " + infected + " " + cured);        
+        var tabla = "<center> <table class='table table-bordered table-dark' style = 'width:800px; text-align: center;'" +
+						"<thead>" +
+							"<tr>" +
+								"<th scope='col'> Name </th>" +
+								"<th scope='col'> Birth Date </th>" +
+							"</tr>" +
+						"</thead>" +
+                        "<tbody>";
+     
+            tabla += "<tr>" +
+                        "<td> Num Deaths </td>"
+                        "<td>" + String(deaths) + "</td>" +
+                    "</tr>";            
+            tabla += "<tr>" +
+                        "<td> Num Infected </td>"
+                        "<td>" + String(infected) + "</td>" +
+                    "</tr>";                    
+            tabla += "<tr>" +
+                        "<td> Num Cured </td>"
+                        "<td>"+ String(cured) + "</td>" +
+                    "</tr>";
+        
+        tabla += "</tbody> </table> </center>";
+        return tabla;
+    }
+
+
     
     var tableAndMap = function(error, json) {
         if (error != null) {
@@ -57,33 +103,24 @@ var app = (function(){
                     "</thead>" +
                     "<tbody>";
         marcadores = [];
-        for (var country in json) {        
-            if (json.hasOwnProperty(country)) {
-                //alert("La clave es " + country+ " y el valor es " + json[country]);                
-                
-                //console.log(json.clave);
-
+        for (var country in json) {                
             //var coordenadas = {lat:airport.location.latitude, lng: airport.location.longitude}
             //marcadores.push(coordenadas);
-                var string = String(json[country]);
-                var quitar = string.replace("[","");
-                quitar = quitar.replace("]","");        
-                var final = String(quitar);
-
-                var datosCountry = JSON.parse(final);
-                alert(datosCountry.deaths + " " + datosCountry.infected + " " + datosCountry.cured);
-                var infected = String(datosCountry.infected);
-                console.log(infected);
-                //var cured = JSON.parse(final3);
-                //alert("DATOS COUNTRY" + datosCountry);
+            var string = String(json[country]);
+            var quitar = string.replace("[","");
+            quitar = quitar.replace("]","");        
+            var final = String(quitar);
+            var datosCountry = JSON.parse(final);
+            //alert(datosCountry.deaths + " " + datosCountry.infected + " " + datosCountry.cured);
+            var infected = String(datosCountry.infected);
+        
+            tabla += "<tr>" +
+                    "<td>" + String(country) + "</td>" +
+                    "<td>" + datosCountry.deaths + "</td>" +
+                    "<td>" + datosCountry.infected + "</td>" +
+                    "<td>" + datosCountry.cured + "</td>" +
+                "</tr>";
             
-                tabla += "<tr>" +
-                        "<td>" + country + "</td>" +
-                        "<td>" + datosCountry.deaths; + "</td>" +
-                        "<td>" + infected + "</td>" +
-                        "<td>" + datosCountry.cured + "</td>" +
-                    "</tr>";
-            }
         }
         
         tabla += "</tbody> </table> </center>";
@@ -96,7 +133,7 @@ var app = (function(){
         
         getStatsByCountry: function(name) {
             
-            apiClient.getStatsByCountry(name, tableAndMap);
+            apiClient.getStatsByCountry(name, tableR);
 
         },
         
