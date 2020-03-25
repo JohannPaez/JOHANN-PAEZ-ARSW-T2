@@ -1,4 +1,4 @@
-package coronavirusAPITest;
+package edu.eci.coronavirus;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

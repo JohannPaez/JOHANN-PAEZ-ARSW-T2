@@ -35,7 +35,7 @@ var app = (function(){
         map.fitBounds(bounds);
     }
     
-    var tableAndMap = function(error, json) {
+    var tableAndMap = function(error, json, name) {
         if (error != null) {
             return;
         }
@@ -58,9 +58,10 @@ var app = (function(){
                     "<tbody>";
         marcadores = [];
         json.forEach(function(country) {
-            var coordenadas = {lat:airport.location.latitude, lng: airport.location.longitude}
-            marcadores.push(coordenadas);
+            //var coordenadas = {lat:airport.location.latitude, lng: airport.location.longitude}
+            //marcadores.push(coordenadas);
             tabla += "<tr>" +
+                        "<td>" + name + "</td>" +
                         "<td>" + country.deaths + "</td>" +
                         "<td>" + country.infected + "</td>" +
                         "<td>" + country.cured + "</td>" +
@@ -76,6 +77,7 @@ var app = (function(){
 
         
         getStatsByCountry: function(name) {
+            console.log(name);
             apiClient.getStatsByCountry(name, tableAndMap);
 
         }

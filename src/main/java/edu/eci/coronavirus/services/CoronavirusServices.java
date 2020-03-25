@@ -104,7 +104,6 @@ public class CoronavirusServices {
 				String remplazado = jsonCountry.replace("\"", "   \'\'\" ");
 				remplazado= jsonCountry.replace("[", "\"");
 				remplazado= remplazado.replace("]", "\"");
-				System.out.println("CACASCASCIANSJCNASKC ------------------------------------------- \n " + jsonCountry + "\n" + remplazado +"\n" +jeje);
 				JSONObject jsonObjectCountry = new JSONObject(remplazado);
 				System.out.println("\n BIEN?????????????????---------------------------------------------- \n" + jsonObjectCountry);
 				jsonObjectCountry.put("Num Deaths", String.valueOf((int) jsonObjectCountry.get("Num Deaths") + deaths));

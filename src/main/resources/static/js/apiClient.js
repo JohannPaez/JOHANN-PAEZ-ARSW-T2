@@ -8,7 +8,7 @@ var apiClient = (function(){
 
             promise.then(function(data) {
                 console.log("DATA ------------------------ " + data);
-                callback(null, JSON.parse(data))
+                callback(null, JSON.parse(data), name)
             }, function(error) {
                 callback(error, null);
             });
