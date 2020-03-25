@@ -44,20 +44,7 @@ public class CoronavirusServices {
 		String casesMap = null;
 		String cases = null;
 		
-		/*if (serviceCache.isThereAllCache()) {
-			casesMap = serviceCache.getAllCache();
-			System.out.println("Consumio CACHE!");
-		} else {
-			cases = serviceHttp.getAllCases();
-			casesMap = saveAllCache(cases);
-			serviceCache.timeCache();
-			System.out.println("Guardo CACHE!");
-		}
-		JSONObject stats = new JSONObject(casesMap);
-		cases = stats.toString();
-		//cases = serviceHttp.getAllCases();
 		
-		return cases;*/
 		if (serviceCache.isThereAllCache()) {
 			cases = serviceCache.getAllCache();
 			System.out.println("Consumio CACHE!");
@@ -68,7 +55,7 @@ public class CoronavirusServices {
 			cases = casesMap;
 			System.out.println("Guardo CACHE!");
 		}
-				
+		
 		return cases;
 	}
 	

@@ -57,20 +57,37 @@ var app = (function(){
                     "</thead>" +
                     "<tbody>";
         marcadores = [];
-    
-        json.forEach(function(country) {
-            
-            console.log(country);
+        console.log(json.Canada);
+        var claves = [];
+        for (var country in json) {        
+            if (json.hasOwnProperty(country)) {
+                //alert("La clave es " + country+ " y el valor es " + json[country]);                
+                
+                //console.log(json.clave);
+
             //var coordenadas = {lat:airport.location.latitude, lng: airport.location.longitude}
             //marcadores.push(coordenadas);
+            var datosCountry = JSON.parse(json[country]);
+            //alert("DATOS COUNTRY" + datosCountry);
+            
             tabla += "<tr>" +
                         "<td>" + country + "</td>" +
-                        "<td>" + country.deaths + "</td>" +
-                        "<td>" + country.infected + "</td>" +
-                        "<td>" + country.cured + "</td>" +
+                        "<td>" + datosCountry.deaths; + "</td>" +
+                        "<td>" + datosCountry.infected + "</td>" +
+                        "<td>" + datosCountry.cured + "</td>" +
                     "</tr>";
-
-        });
+            }
+        }
+        /*
+        claves.forEach(function(clave) {
+            tabla += "<tr>" +
+                    "<td>" + clave + "</td>" +
+                    "<td>" + json.clave.deaths + "</td>" +
+                    "<td>" + json.clave.deathsinfected + "</td>" +
+                    "<td>" + json.clave.deathscured + "</td>" +
+                    "</tr>";
+        });*/
+        
         tabla += "</tbody> </table> </center>";
         return tabla;
     }
