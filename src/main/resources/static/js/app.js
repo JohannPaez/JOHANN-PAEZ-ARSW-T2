@@ -57,11 +57,14 @@ var app = (function(){
                     "</thead>" +
                     "<tbody>";
         marcadores = [];
+    
         json.forEach(function(country) {
+            
+            console.log(country);
             //var coordenadas = {lat:airport.location.latitude, lng: airport.location.longitude}
             //marcadores.push(coordenadas);
             tabla += "<tr>" +
-                        "<td>" + $("#idCountry").val() + "</td>" +
+                        "<td>" + country + "</td>" +
                         "<td>" + country.deaths + "</td>" +
                         "<td>" + country.infected + "</td>" +
                         "<td>" + country.cured + "</td>" +
@@ -80,6 +83,10 @@ var app = (function(){
             
             apiClient.getStatsByCountry(name, tableAndMap);
 
+        },
+        
+        getAll: function() {
+            apiClient.getAll(tableAndMap);
         }
 
     }

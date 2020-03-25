@@ -2,7 +2,9 @@ package edu.eci.coronavirus.cache;
 
 
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.BiConsumer;
 
+import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 
 import edu.eci.coronavirus.model.ContenidoJson;
@@ -45,8 +47,18 @@ public class CoronavirusCache {
 		return cacheByName.get(name).getJson();
 	}
 	
-	public ConcurrentHashMap<String, ContenidoJson> getAllCache() {
-		return cacheByName;
+	public String getAllCache() {
+		final ConcurrentHashMap<String, String> give = new ConcurrentHashMap<>();
+		cacheByName.forEach(new BiConsumer<String, ContenidoJson>() {
+			@Override
+			public void accept(String k, ContenidoJson v) {
+				give.put(k, v.getJson());
+				//System.out.println(v.getJson());
+			}
+		});
+		JSONObject json = new JSONObject(give);
+		return json.toString();
+		//return cacheByName;
 	}
 	
 	public void timeCache() {

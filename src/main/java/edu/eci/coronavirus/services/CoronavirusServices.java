@@ -41,10 +41,10 @@ public class CoronavirusServices {
 	}
 	
 	public String getAllCases() throws InterruptedException {
-		ConcurrentHashMap<String, ContenidoJson> casesMap = new ConcurrentHashMap<>();
+		String casesMap = null;
 		String cases = null;
 		
-		if (serviceCache.isThereAllCache()) {
+		/*if (serviceCache.isThereAllCache()) {
 			casesMap = serviceCache.getAllCache();
 			System.out.println("Consumio CACHE!");
 		} else {
@@ -57,6 +57,18 @@ public class CoronavirusServices {
 		cases = stats.toString();
 		//cases = serviceHttp.getAllCases();
 		
+		return cases;*/
+		if (serviceCache.isThereAllCache()) {
+			cases = serviceCache.getAllCache();
+			System.out.println("Consumio CACHE!");
+		} else {
+			cases = serviceHttp.getAllCases();
+			casesMap = saveAllCache(cases);
+			serviceCache.timeCache();
+			cases = casesMap;
+			System.out.println("Guardo CACHE!");
+		}
+				
 		return cases;
 	}
 	
@@ -84,7 +96,7 @@ public class CoronavirusServices {
 		return stats.toString();
 	}
 	
-	private ConcurrentHashMap<String, ContenidoJson> saveAllCache(String cases) throws InterruptedException {
+	private String saveAllCache(String cases) throws InterruptedException {
 		String json = cases;
 		JSONObject jo = new JSONObject(json);
 		JSONObject data = jo.getJSONObject("data");

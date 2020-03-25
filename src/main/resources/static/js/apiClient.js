@@ -12,6 +12,17 @@ var apiClient = (function(){
             }, function(error) {
                 callback(error, null);
             });
+        },
+        getAll: function(callback) {
+            var promise = $.get({
+                url: "/cases"
+            });
+            promise.then(function(data) {
+                console.log("DATA ------------------------ " + data);                
+                callback(null, JSON.parse(data))
+            }, function(error) {
+                callback(error, null);
+            });
         }
     }
 
