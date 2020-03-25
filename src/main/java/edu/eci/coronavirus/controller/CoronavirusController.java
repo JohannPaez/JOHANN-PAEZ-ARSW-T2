@@ -22,6 +22,12 @@ public class CoronavirusController {
 		return new ResponseEntity<>(services.getCasesByCountry(country),HttpStatus.ACCEPTED);
 	}
 	
+	@RequestMapping(value = "/{country}/{index}", method=RequestMethod.GET)
+	public ResponseEntity<?> getPropiedades(@PathVariable String country, @PathVariable String index){
+		System.out.println("ENTRA PROPIEDADES");
+		return new ResponseEntity<>(services.propiedades(country),HttpStatus.ACCEPTED);
+	}
+	
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<?> getAllCases(){

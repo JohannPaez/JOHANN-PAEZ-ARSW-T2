@@ -16,6 +16,7 @@ public class CoronavirusCache {
 	
 	// String (Conuntry) ContenidoJson (Tiempo para verificar el cache, JSON)
 	private ConcurrentHashMap<String, ContenidoJson> cacheByName = new ConcurrentHashMap<>();
+	private ConcurrentHashMap<String, ContenidoJson> propiedades = new ConcurrentHashMap<>();
 	// Cache en general
 	private long time;
 	
@@ -24,6 +25,14 @@ public class CoronavirusCache {
 		//System.out.println("\n -----------------------------------ENTRO A MIRAR SI HAY CACHE----------------------------------------------- \n");
 		boolean isThereCache = false;
 		if (cacheByName.get(name) != null && System.currentTimeMillis() - cacheByName.get(name).getTiempo() <= 1000 * 60 * 5) {
+			isThereCache = true;
+		}	
+		return isThereCache;
+	}
+	
+	public synchronized boolean isThereCachePropiedades(String name) {
+		boolean isThereCache = false;
+		if (propiedades.get(name) != null && System.currentTimeMillis() - propiedades.get(name).getTiempo() <= 1000 * 60 * 5) {
 			isThereCache = true;
 		}	
 		return isThereCache;
@@ -45,6 +54,16 @@ public class CoronavirusCache {
 	
 	public String getCache(String name) {
 		return cacheByName.get(name).getJson();
+	}
+	
+	public void saveCacheProp(String name, String json) {
+		ContenidoJson contenidoJson = new ContenidoJson(System.currentTimeMillis(), json);
+		propiedades.put(name, contenidoJson);
+		System.out.println("GUARDO EN CACHE!");
+	}
+	
+	public String getCacheProp(String name) {
+		return propiedades.get(name).getJson();
 	}
 	
 	public String getAllCache() {

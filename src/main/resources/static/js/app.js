@@ -13,6 +13,24 @@ var app = (function(){
         });
         plotMarkers(marcadores);
     }
+
+
+    var propiedades = function(error, json) {
+        if (error != null) {
+            return;
+        }
+
+        obtenerPropiedades(json);
+        crearMapa();
+    }
+
+    var obtenerPropiedades = function(json) {
+        marcadores = [];
+        json.forEach(function(country) {			
+            var coordenadasJson = {lat:country.latlng[0], lng:country.latlng[1]};
+            marcadores.push(coordenadasJson);
+        });
+    };
     
     function plotMarkers(m) {
         markers = [];
@@ -149,11 +167,16 @@ var app = (function(){
         getStatsByCountry: function(name) {
             
             apiClient.getStatsByCountry(name, tableR);
+            app.getPropiedades(name);
 
         },
         
         getAll: function() {
             apiClient.getAll(tableAndMap);
+        },
+
+        getPropiedades: function(name) {
+            apiClient.getPropiedades(name, propiedades);
         }
 
     }

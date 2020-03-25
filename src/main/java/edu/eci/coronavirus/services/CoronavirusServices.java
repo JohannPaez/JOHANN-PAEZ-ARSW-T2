@@ -124,4 +124,19 @@ public class CoronavirusServices {
 	public CoronavirusCache getServicesCache() {
 		return serviceCache;
 	}
+	
+	public String propiedades(String country) {
+		String cases = null;
+		
+		if (serviceCache.isThereCachePropiedades(country)) {
+			cases = serviceCache.getCacheProp(country);
+			System.out.println("Consumio CACHE!");
+		} else {
+			cases = serviceHttp.propiedades(country);
+			String Json = serviceHttp.propiedades(country);
+			serviceCache.saveCacheProp(cases, Json);
+		}
+				
+		return cases;
+	}
 }

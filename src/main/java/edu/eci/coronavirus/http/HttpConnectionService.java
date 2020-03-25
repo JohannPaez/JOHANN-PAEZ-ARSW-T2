@@ -43,4 +43,20 @@ public class HttpConnectionService {
 		
 	}
 	
+	public String propiedades(String country) {
+		String Json = null;
+		try {
+			HttpResponse<String> response = Unirest.get("https://restcountries-v1.p.rapidapi.com/name/" + country)
+					.header("x-rapidapi-host", "restcountries-v1.p.rapidapi.com")
+					.header("x-rapidapi-key", "54276a88a3msh34d1a569336cf16p1e0818jsn40847117ffe2")
+					.asString();
+			Json = response.getBody();
+		} catch (UnirestException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return Json;
+	}
+	
 }
