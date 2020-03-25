@@ -57,8 +57,6 @@ var app = (function(){
                     "</thead>" +
                     "<tbody>";
         marcadores = [];
-        console.log(json.Canada);
-        var claves = [];
         for (var country in json) {        
             if (json.hasOwnProperty(country)) {
                 //alert("La clave es " + country+ " y el valor es " + json[country]);                
@@ -67,26 +65,26 @@ var app = (function(){
 
             //var coordenadas = {lat:airport.location.latitude, lng: airport.location.longitude}
             //marcadores.push(coordenadas);
-            var datosCountry = JSON.parse(json[country]);
-            //alert("DATOS COUNTRY" + datosCountry);
+                var string = String(json[country]);
+                var quitar = string.replace("[","");
+                quitar = quitar.replace("]","");        
+                var final = String(quitar);
+
+                var datosCountry = JSON.parse(final);
+                alert(datosCountry.deaths + " " + datosCountry.infected + " " + datosCountry.cured);
+                var infected = String(datosCountry.infected);
+                console.log(infected);
+                //var cured = JSON.parse(final3);
+                //alert("DATOS COUNTRY" + datosCountry);
             
-            tabla += "<tr>" +
+                tabla += "<tr>" +
                         "<td>" + country + "</td>" +
                         "<td>" + datosCountry.deaths; + "</td>" +
-                        "<td>" + datosCountry.infected + "</td>" +
+                        "<td>" + infected + "</td>" +
                         "<td>" + datosCountry.cured + "</td>" +
                     "</tr>";
             }
         }
-        /*
-        claves.forEach(function(clave) {
-            tabla += "<tr>" +
-                    "<td>" + clave + "</td>" +
-                    "<td>" + json.clave.deaths + "</td>" +
-                    "<td>" + json.clave.deathsinfected + "</td>" +
-                    "<td>" + json.clave.deathscured + "</td>" +
-                    "</tr>";
-        });*/
         
         tabla += "</tbody> </table> </center>";
         return tabla;
