@@ -1,4 +1,4 @@
-package edu.eci.coronavirus.services;
+package edu.eci.coronavirus.thread;
 
 import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
@@ -6,77 +6,23 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import edu.eci.coronavirus.cache.CoronavirusCache;
-import edu.eci.coronavirus.http.HttpConnectionService;
 import edu.eci.coronavirus.model.ContenidoJson;
 
-
-
-@Service
-public class CoronavirusServices {
+public class CoronaVirusThread extends Thread {
 	
-	@Autowired
-	HttpConnectionService serviceHttp;
 	@Autowired
 	CoronavirusCache serviceCache;
 	
-	public String getCasesByCountry(String country) {
-		String cases = null;
-		
-		if (serviceCache.isThereCache(country)) {
-			cases = serviceCache.getCache(country);
-			System.out.println("Consumio CACHE!");
-		} else {
-			cases = serviceHttp.getCasesByCountry(country);
-			serviceCache.saveCache(country, cases=getStatsByCountry(cases));
-		}
-				
-		return cases;
-	}
 	
-	public String getAllCases() {
-		ConcurrentHashMap<String, ContenidoJson> casesMap = new ConcurrentHashMap<>();
-		String cases = null;
-		
-		if (serviceCache.isThereAllCache()) {
-			casesMap = serviceCache.getAllCache();
-			System.out.println("Consumio CACHE!");
-		} else {
-			cases = serviceHttp.getAllCases();
-			casesMap = saveAllCache(cases);
-			serviceCache.timeCache();
-		}
-		JSONObject stats = new JSONObject(casesMap);
-		cases = stats.toString();
-		//cases = serviceHttp.getAllCases();
-		
-		return cases;
-	}
 	
-	private String getStatsByCountry(String jsonCountry) {
-		String json = jsonCountry;
-		JSONObject jo = new JSONObject(json);
-		JSONObject data = jo.getJSONObject("data");
-		JSONArray covid19Stats = jo.getJSONObject("data").getJSONArray("covid19Stats");		
-
-		JSONArray stats = new JSONArray();
-		HashMap<String, String> res = new HashMap();
-		int deaths = 0;
-		int infected = 0;
-		int cured = 0;
-		for (int i = 0; i < covid19Stats.length(); i++) {
-			JSONObject ciclo = new JSONObject(covid19Stats.get(i).toString());		
-			deaths += (int) ciclo.get("deaths");
-			infected += (int) ciclo.get("confirmed");
-			cured += (int) ciclo.get("recovered");			
-		}		
-		res.put("deaths", String.valueOf(deaths));
-		res.put("infected", String.valueOf(infected));
-		res.put("cured", String.valueOf(cured));	
-		stats.put(res);
-		return stats.toString();
+	
+	
+	
+	@Override
+	public void run() {
+		
 	}
 	
 	private ConcurrentHashMap<String, ContenidoJson> saveAllCache(String cases) {
