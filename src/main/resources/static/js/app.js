@@ -35,47 +35,62 @@ var app = (function(){
         map.fitBounds(bounds);
     }
 
-    var tableR = function(error, json) {
+    var tableR = function(error, deaths, infected, cured) {
         if (error != null) {
             alert("ENTRO ALERT");
             return;
         }
-        alert("ENTRO");
-        var StringTableRight = tableRight(json);
+        var StringTableRight = tableRight(deaths, infected, cured);
+        var StringTableRight2 = tableRight2(deaths, infected, cured);
+        $("#idTableRight2").html(StringTableRight2);
         $("#idTableRight").html(StringTableRight);
+        
     }
 
-    var tableRight = function(json) {
-
-        
-        var deaths = json.deaths;
-        var infected = json.infected;
-        var cured = json.cured;
-        alert(deaths + " " + infected + " " + cured);        
-        //alert(deaths + " " + infected + " " + cured);        
-        var tabla = "<center> <table class='table table-bordered table-dark' style = 'width:800px; text-align: center;'" +
+    var tableRight2 = function(deaths, infected, cured) {
+          var tabla = "<table class='table table-bordered table-dark' style = 'width:200px; text-align: center;'" +
 						"<thead>" +
 							"<tr>" +
-								"<th scope='col'> Name </th>" +
 								"<th scope='col'> Birth Date </th>" +
 							"</tr>" +
 						"</thead>" +
                         "<tbody>";
      
             tabla += "<tr>" +
-                        "<td> Num Deaths </td>"
-                        "<td>" + String(deaths) + "</td>" +
+                        "<td>"+  "Num Deaths" + "</td>" +
                     "</tr>";            
             tabla += "<tr>" +
-                        "<td> Num Infected </td>"
-                        "<td>" + String(infected) + "</td>" +
+                        "<td>" + "Num Infected" + "</td>" +
                     "</tr>";                    
             tabla += "<tr>" +
-                        "<td> Num Cured </td>"
-                        "<td>"+ String(cured) + "</td>" +
+                        "<td>"+ "Num Cured" + "</td>" +
                     "</tr>";
         
-        tabla += "</tbody> </table> </center>";
+        tabla += "</tbody> </table>";
+        return tabla;
+    }
+
+    var tableRight = function(deaths, infected, cured) {
+    
+        var tabla = "<table class='table table-bordered table-dark' style = 'width:200px; text-align: center;'" +
+						"<thead>" +
+							"<tr>" +
+								"<th scope='col'> Birth Date </th>" +
+							"</tr>" +
+						"</thead>" +
+                        "<tbody>";
+     
+            tabla += "<tr>" +
+                        "<td>"+  deaths + "</td>" +
+                    "</tr>";            
+            tabla += "<tr>" +
+                        "<td>" + infected + "</td>" +
+                    "</tr>";                    
+            tabla += "<tr>" +
+                        "<td>"+ cured + "</td>" +
+                    "</tr>";
+        
+        tabla += "</tbody> </table>";
         return tabla;
     }
 

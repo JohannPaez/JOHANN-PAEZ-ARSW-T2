@@ -7,8 +7,13 @@ var apiClient = (function(){
             });
 
             promise.then(function(data) {
-                console.log("DATA ------------------------ " + data);                
-                callback(null, JSON.parse(data))
+                console.log("DATA ------------------------ " + data);
+                data = JSON.parse(data);
+                var deaths = data.deaths;
+                var infected = data.infected;                
+                var cured = data.cured;      
+                console.log(deaths + " " + infected + " " + cured);                          
+                callback(null, deaths, infected, cured);
             }, function(error) {
                 callback(error, null);
             });
@@ -18,7 +23,7 @@ var apiClient = (function(){
                 url: "/cases"
             });
             promise.then(function(data) {
-                //console.log("DATA ------------------------ " + data);                
+                console.log("DATA ------------------------ " + data);                
                 callback(null, JSON.parse(data))
             }, function(error) {
                 callback(error, null);

@@ -51,7 +51,6 @@ public class CoronavirusCache {
 		final ConcurrentHashMap<String, String> give = new ConcurrentHashMap<>();
 		for (String key : cacheByName.keySet()) {
 			give.put(key, getCache(key));
-			
 		}
 		/*cacheByName.forEach(new BiConsumer<String, String>() {
 			@Override
@@ -59,6 +58,7 @@ public class CoronavirusCache {
 				give.put(k, getCache(k));
 			}
 		});*/
+		
 		JSONObject json = new JSONObject(give);
 		return json.toString();
 		//return cacheByName;
