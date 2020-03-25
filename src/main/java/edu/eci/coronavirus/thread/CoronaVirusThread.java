@@ -1,6 +1,7 @@
 package edu.eci.coronavirus.thread;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.json.JSONArray;
@@ -8,29 +9,32 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import edu.eci.coronavirus.cache.CoronavirusCache;
-import edu.eci.coronavirus.model.ContenidoJson;
 
 public class CoronaVirusThread extends Thread {
 	
 	@Autowired
 	CoronavirusCache serviceCache;
+	private JSONArray covid19Stats;
+	
+	public CoronaVirusThread() {
+		covid19Stats = new JSONArray();
+	}
+	
+	public CoronaVirusThread(JSONArray covid19Stats) {
+		this.covid19Stats = covid19Stats;
+	}
 	
 	
-	
-	
+	public void addStats(JSONObject json) {
+		Map<String, Object> map = json.toMap();		
+		covid19Stats.put(map);
+	}
 	
 	
 	@Override
 	public void run() {
-		
-	}
-	
-	private ConcurrentHashMap<String, ContenidoJson> saveAllCache(String cases) {
-		String json = cases;
-		JSONObject jo = new JSONObject(json);
-		JSONObject data = jo.getJSONObject("data");
-		JSONArray covid19Stats = jo.getJSONObject("data").getJSONArray("covid19Stats");
-		
+		System.out.println("\n \n LISTA CREADA \n \n" + covid19Stats);
+		if (true) return;
 		JSONArray stats = new JSONArray();
 		HashMap<String, String> res = new HashMap();
 		System.out.println("\n todo bien ---------------------------------------------------------------- \n");
@@ -84,7 +88,7 @@ public class CoronaVirusThread extends Thread {
 				System.out.println("\n CADENA NORMAL SEGUNDA PARTE CICLO  ---------------------------------------------------------------- \n" + ciclo.get("country").toString() + jsonCountry);
 			}			
 		}
-
-		return serviceCache.getAllCache();
+	
 	}
+
 }
