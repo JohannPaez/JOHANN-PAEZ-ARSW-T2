@@ -1,5 +1,20 @@
 # Escuela Colombiana de Ingeniería Julio Garavito - Arquitecturas de Software ARSW - Parcial Segundo Tercio
 
+## Desarrollo
+- Diseño de arquitectura:
+	- Se utilizo una arquitectura rest.
+	
+-  Ejecutar Localmente:
+	- mvn compile
+	- mvn spring-boot:run
+	
+- ¿Cómo se puede extender y cómo podría, por ejemplo, hacer que una función específica la implementara un proveedor de servicios diferente?
+	- Para cambiar el proveedor de servicios se debe modificar brevemente la clase http services que es el que consume y se
+	puede extender añadiendo en el controlador los metodos requeridos, y agregando la funcionalidad a la capa de servicios.
+	
+- URL HEROKU
+	- [APLICACION HEROKU](https://johann-paez-arsw-t2.herokuapp.com/)
+
 ## Preparación para el Parcial
 
 Con el objetivo de preparar el examen final del segundo tercio, por favor siga las siguientes instrucciones.
