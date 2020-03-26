@@ -10,6 +10,11 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 @Component
 public class HttpConnectionService {
 	
+	/**
+	 * Da los casos de coronavirus de un pais
+	 * @param country Es el país 
+	 * @return Con el contenido deseado
+	 */
 	public String getCasesByCountry(String country) {
 		System.out.println("ENTRA " + country);
 		String Json = null;
@@ -27,6 +32,11 @@ public class HttpConnectionService {
 		return Json;
 	}
 	
+	
+	/**
+	 * Da los casos de coronavirus de todo el mundo
+	 * @return Con el contenido deseado
+	 */
 	public String getAllCases() {
 		String Json = null;
 		try {
@@ -43,6 +53,11 @@ public class HttpConnectionService {
 		
 	}
 	
+	/**
+	 * Da las propiedades de los casos de coronavirus de un pais
+	 * @param country Es el país 
+	 * @return Con el contenido deseado
+	 */
 	public String propiedades(String country) {
 		String Json = null;
 		try {

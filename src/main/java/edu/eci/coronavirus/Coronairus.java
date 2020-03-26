@@ -12,6 +12,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Coronairus {
 	
 	
+	/**
+	 * Clase Principal 
+	 * @param args
+	 */
     public static void main( String[] args )
     {
     	SpringApplication.run(Coronairus.class, args);

@@ -26,6 +26,12 @@ public class CoronavirusServices {
 	@Autowired
 	CoronavirusCache serviceCache;
 	
+	
+	/**
+	 * Da todos los casos de coronavirus de un pais y lo guarda en cache si no lo tiene
+	 * @param country Es el país
+	 * @return El contenido deseado
+	 */
 	public String getCasesByCountry(String country) {
 		String cases = null;
 		
@@ -40,6 +46,11 @@ public class CoronavirusServices {
 		return cases;
 	}
 	
+	/**
+	 * Da todos los casos de coronavirus del mundo y lo guarda en cache si no lo tiene
+	 * @return El contenido deseado
+	 * @throws InterruptedException Por si el metodo saveAllCache tiene problemas al guardar
+	 */
 	public String getAllCases() throws InterruptedException {
 		String casesMap = null;
 		String cases = null;
@@ -59,6 +70,11 @@ public class CoronavirusServices {
 		return cases;
 	}
 	
+	/**
+	 * Obtiene las propiedades deseadas de los casos de coronavirus de un país del JSON generado por el servicio http 
+	 * @param jsonCountry Es el país 
+	 * @return El contenido deseado en formato json/string
+	 */
 	private String getStatsByCountry(String jsonCountry) {
 		String json = jsonCountry;
 		JSONObject jo = new JSONObject(json);
@@ -83,6 +99,12 @@ public class CoronavirusServices {
 		return stats.toString();
 	}
 	
+	/**
+	 * Guarda todo el cache de manera concurrente para hacerlo más eficaz, se utilizaron 12 hilos.
+	 * @param cases Son los casos de coronavirus en el mundo
+	 * @return El contenido deseado
+	 * @throws InterruptedException Por si al momento de hacer JOIN entre los hilos da error
+	 */
 	private String saveAllCache(String cases) throws InterruptedException {
 		String json = cases;
 		JSONObject jo = new JSONObject(json);
@@ -121,10 +143,19 @@ public class CoronavirusServices {
 		return serviceCache.getAllCache();
 	}
 	
+	/**
+	 * Da el servicioCache
+	 * @return serviceCache Es el servicio de cache
+	 */
 	public CoronavirusCache getServicesCache() {
 		return serviceCache;
 	}
 	
+	/**
+	 * Da las propiedades de los casos de coronavirus de un país y lo guarda en cache si no lo tiene
+	 * @param country Es el país
+	 * @return El contenido deseado
+	 */
 	public String propiedades(String country) {
 		String cases = null;
 		

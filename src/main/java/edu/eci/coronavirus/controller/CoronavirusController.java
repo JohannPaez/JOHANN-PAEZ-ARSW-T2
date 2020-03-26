@@ -17,11 +17,23 @@ public class CoronavirusController {
 	@Autowired
 	CoronavirusServices services;
 	
+	
+	/**
+	 * Da los casos de coronavirus de un pais
+	 * @param country Es el país 
+	 * @return Respuesta http, diciendo si la petición fue correcta o no
+	 */
 	@RequestMapping(value = "/{country}", method=RequestMethod.GET)
 	public ResponseEntity<?> getCasesByCountry(@PathVariable String country){
 		return new ResponseEntity<>(services.getCasesByCountry(country),HttpStatus.ACCEPTED);
 	}
 	
+	
+	/**
+	 * Da las propiedades de los casos de coronavirus de un pais
+	 * @param country Es el país 
+	 * @return Respuesta http, diciendo si la petición fue correcta o no
+	 */
 	@RequestMapping(value = "/{country}/{index}", method=RequestMethod.GET)
 	public ResponseEntity<?> getPropiedades(@PathVariable String country, @PathVariable String index){
 		System.out.println("ENTRA PROPIEDADES");
@@ -29,6 +41,10 @@ public class CoronavirusController {
 	}
 	
 	
+	/**
+	 * Da todos los casos de coronavirus en el mundo
+	 * @return Respuesta http, diciendo si la petición fue correcta o no
+	 */
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<?> getAllCases(){
 		try {

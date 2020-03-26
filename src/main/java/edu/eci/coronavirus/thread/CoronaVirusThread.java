@@ -17,17 +17,29 @@ public class CoronaVirusThread extends Thread {
 	private JSONArray covid19Stats;
 	CoronavirusServices services;
 	
+	/**
+	 * Crea un hilo para guardar en cache mas eficazmente
+	 * @param services Es la referencia a la componente de servicios
+	 */
 	public CoronaVirusThread(CoronavirusServices services) {
 		this.covid19Stats = new JSONArray();
 		this.services = services;
 		
 	}
 	
+	/**
+	 * Crea un hilo dandole el Array deseado para ser analizada
+	 * @param covid19Stats Es el arrayJson deseado
+	 */
 	public CoronaVirusThread(JSONArray covid19Stats) {
 		this.covid19Stats = covid19Stats;
 	}
 	
 	
+	/**
+	 * Añade las estadísticas que deben ser revisadas por la clase
+	 * @param json Es el objetoJSON para poder crear la lista que será analizada
+	 */
 	public void addStats(JSONObject json) {
 		Map<String, Object> map = json.toMap();		
 		covid19Stats.put(map);
@@ -36,6 +48,9 @@ public class CoronaVirusThread extends Thread {
 		return covid19Stats;
 	}
 	
+	/**
+	 * Guarga en cache el contenido por si no lo tiene. Si lo tiene, lo busca, lo actualiza y lo actualiza en cache
+	 */
 	@Override
 	public void run() {	
 			
